@@ -8,6 +8,12 @@
 <body>
 
 <h1>Добавить новость</h1>
+<?php
+if($error)
+{
+    echo "<h2>Заполните все поля!</h2>";
+}
+?>
 <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 
     Заголовок новости:<br />
