@@ -2,7 +2,7 @@
 class NewsModel
 {
     public function saveNews(){
-        if($_POST['title'] !== null and $_POST['description'] !== null and $_POST['source'] !== null)
+        if(!empty($_POST['title']) and !empty($_POST['description']) and !empty($_POST['source']))
         {
             $title = $_POST['title'];
             $desc = $_POST['description'];
@@ -15,9 +15,6 @@ class NewsModel
         {
             return false;
         }
-    }
-    public function deleteNews(){
-
     }
 
     public function render($file, $news = null, $categories = null, $error = false) {

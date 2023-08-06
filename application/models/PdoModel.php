@@ -20,8 +20,8 @@ class PdoModel implements IteratorAggregate
             $this->_db->exec($sql) or $this->_db->errorInfo()[0];
             $sql = "CREATE TABLE comments(
                               id INTEGER PRIMARY KEY AUTOINCREMENT,
-                              news_id INTEGER,
-                              parent_id INTEGER,
+                              newsId INTEGER,
+                              parentId INTEGER,
                               description TEXT,
                               datetime INTEGER
                           )";
@@ -76,11 +76,11 @@ class PdoModel implements IteratorAggregate
     function saveComments($comment)
     {
         $dt = time();
-        $news_id = $comment[0];
-        $parent_id = $comment[1];
+        $newsId = $comment[0];
+        $parentId = $comment[1];
         $description = $comment[2];
-        $sql = "INSERT INTO comments(news_id, parent_id, description, datetime)
-                VALUES($news_id, $parent_id, '$description', $dt)";
+        $sql = "INSERT INTO comments(newsId, parentId, description, datetime)
+                VALUES($newsId, $parentId, '$description', $dt)";
         $ret = $this->_db->exec($sql);
         if (!$ret)
             return false;
@@ -121,9 +121,9 @@ class PdoModel implements IteratorAggregate
 
     public function getComments($id){
         try {
-            $sql = "SELECT id, news_id, parent_id, description, datetime
+            $sql = "SELECT id, newsId, parentId, description, datetime
               FROM comments
-              WHERE news_id = $id";
+              WHERE newsId = $id";
             $result = $this->_db->query($sql);
             if (!is_object($result))
                 throw new Exception($this->_db->errorInfo()[0]);
