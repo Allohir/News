@@ -3,7 +3,8 @@
 set_include_path(get_include_path()
     . PATH_SEPARATOR .'application/controllers'
     .PATH_SEPARATOR.'application/models'
-    .PATH_SEPARATOR.'application/views');
+    .PATH_SEPARATOR.'application/views'
+    .PATH_SEPARATOR.'application/entities');
 
 /* Имена файлов: views */
 const NEWS_LIST_PAGE = 'news.php';
