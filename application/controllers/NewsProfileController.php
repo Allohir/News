@@ -1,6 +1,7 @@
 <?php
 class NewsProfileController implements IController {
     private $error = false;
+    private $errorCommentId;
     public function deleteAction() {
         $fc = FrontController::getInstance();
         /* Инициализация модели */
@@ -21,7 +22,7 @@ class NewsProfileController implements IController {
         /* Инициализация модели */
         $database = new PdoModel();
         $id = (int) $fc->getParams()['id'];
-        $news_id = (int) $fc->getParams()['news_id'];
+        $newsId = (int) $fc->getParams()['newsId'];
         if(!$id)
         {
             throw new Exception();
@@ -29,7 +30,7 @@ class NewsProfileController implements IController {
         else
         {
             $database->deleteComment($id);
-            header('Location: http://127.0.0.1/newsProfile/view/id/'.$news_id);
+            header('Location: http://127.0.0.1/newsProfile/view/id/'.$newsId);
         }
     }
 
@@ -53,6 +54,7 @@ class NewsProfileController implements IController {
                 if(($comments = $commentsModel->saveComment()) === false)
                 {
                     $this->error = true;
+                    $this->errorCommentId = $_POST['parentId'];
                 }
                 else
                 {
@@ -63,7 +65,7 @@ class NewsProfileController implements IController {
 
             $formatedComments = [];
             $commentsModel->formatComments($comments, $formatedComments);
-            $output .= $commentsModel->render(NEWS_COMMENTS, $formatedComments);
+            $output .= $commentsModel->render(NEWS_COMMENTS, $formatedComments, $this->error, $this->errorCommentId);
 
 
             $fc->setBody($output);
